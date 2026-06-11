@@ -23,6 +23,8 @@ public sealed class RawMaterial : BaseEntity
     public string Name { get; set; } = string.Empty;
     public string Unit { get; set; } = "Kg";
     public decimal ReorderLevel { get; set; }
+    /// <summary>Storage location / godown / rack where this material is kept.</summary>
+    public string? Location { get; set; }
 }
 
 public sealed class Machine : BaseEntity
