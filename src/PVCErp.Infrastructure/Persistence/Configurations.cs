@@ -20,6 +20,7 @@ public sealed class RawMaterialConfiguration : IEntityTypeConfiguration<RawMater
     {
         builder.Property(item => item.Name).HasMaxLength(120).IsRequired();
         builder.HasIndex(item => item.Name).IsUnique();
+        builder.Property(item => item.Location).HasMaxLength(120);
     }
 }
 
