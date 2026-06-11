@@ -90,7 +90,8 @@ export class InventoryComponent implements OnInit {
   form = this.fb.nonNullable.group({
     name: ['', Validators.required],
     unit: ['Kg', Validators.required],
-    reorderLevel: [0, [Validators.required, Validators.min(0)]]
+    reorderLevel: [0, [Validators.required, Validators.min(0)]],
+    location: ['']
   });
 
   grnForm = this.fb.nonNullable.group({
@@ -121,11 +122,10 @@ export class InventoryComponent implements OnInit {
   }
 
   save(): void {
-    debugger;
     if (this.form.invalid) return;
-
-    this.api.createRawMaterial(this.form.getRawValue()).subscribe(() => {
-      this.form.reset({ name: '', unit: 'Kg', reorderLevel: 0 });
+    const { name, unit, reorderLevel, location } = this.form.getRawValue();
+    this.api.createRawMaterial({ name, unit, reorderLevel, location: location || undefined }).subscribe(() => {
+      this.form.reset({ name: '', unit: 'Kg', reorderLevel: 0, location: '' });
       this.currentPage$.next(1);
       this.refresh$.next();
     });

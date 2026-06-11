@@ -46,7 +46,7 @@ export class ApiService {
     return this.http.get<RawMaterialStock[]>(`${this.baseUrl}/inventory/get-materials`);
   }
 
-  createRawMaterial(payload: { name: string; unit: string; reorderLevel: number }): Observable<RawMaterialStock> {
+  createRawMaterial(payload: { name: string; unit: string; reorderLevel: number; location?: string }): Observable<RawMaterialStock> {
     return this.http.post<RawMaterialStock>(`${this.baseUrl}/inventory/raw-materials`, payload);
   }
 

@@ -13,6 +13,7 @@ export interface RawMaterialStock {
   unit: string;
   reorderLevel: number;
   availableKg: number;
+  location?: string;
 }
 export interface GrnStock {
   id: string;

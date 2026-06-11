@@ -75,6 +75,7 @@
           <th>Material</th>
           <th>Available</th>
           <th>Reorder Level</th>
+          <th>Location</th>
         </tr>
       </thead>
       <tbody>
@@ -83,6 +84,7 @@
             <td>{{ item.name }}</td>
             <td>{{ item.availableKg | number: '1.0-2' }} {{ item.unit }}</td>
             <td>{{ item.reorderLevel | number: '1.0-2' }} {{ item.unit }}</td>
+            <td>{{ item.location || '—' }}</td>
           </tr>
         }
       </tbody>
@@ -111,6 +113,7 @@
     <label>Name<input formControlName="name" placeholder="Calcium"></label>
     <label>Unit<input formControlName="unit"></label>
     <label>Reorder Level<input type="number" formControlName="reorderLevel"></label>
+    <label>Storage Location<input formControlName="location" placeholder="e.g. Godown A / Rack 3"></label>
     <button type="submit">Save Material</button>
   </form>
 
