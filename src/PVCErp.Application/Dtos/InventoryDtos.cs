@@ -2,8 +2,8 @@ using PVCErp.Domain.Common;
 
 namespace PVCErp.Application.Dtos;
 
-public sealed record RawMaterialDto(Guid Id, string Name, string Unit, decimal ReorderLevel, decimal AvailableKg);
-public sealed record CreateRawMaterialRequest(string Name, string Unit, decimal ReorderLevel);
+public sealed record RawMaterialDto(Guid Id, string Name, string Unit, decimal ReorderLevel, decimal AvailableKg, string? Location);
+public sealed record CreateRawMaterialRequest(string Name, string Unit, decimal ReorderLevel, string? Location);
 public sealed record CreateSupplierRequest(string Name, string? Country, string? GstNumber, string? Phone);
 public sealed record SupplierDto(Guid Id, string Name, string? Country, string? GstNumber, string? Phone);
 public sealed record GrnItemRequest(Guid RawMaterialId, string BatchNumber, decimal QuantityKg);
