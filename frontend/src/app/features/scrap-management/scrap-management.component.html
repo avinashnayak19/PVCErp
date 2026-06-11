@@ -1,0 +1,41 @@
+<section class="page-title">
+  <div>
+    <h2>Scrap Management</h2>
+    <p>Track damaged pipes, chips, crushing, pulverizer production, and reuse.</p>
+  </div>
+  <div class="topbar"><span>Shift: Morning</span><button class="secondary small">Admin</button></div>
+</section>
+
+<section class="card-grid">
+  <article class="metric-card"><span>Total Scrap Today</span><strong>84 kg</strong><small>Generated</small></article>
+  <article class="metric-card"><span>Chips for Crushing</span><strong>56 kg</strong><small>Stage 3</small></article>
+  <article class="metric-card"><span>Pulverizer Produced</span><strong>38 kg</strong><small>Reusable</small></article>
+  <article class="metric-card"><span>Recovery</span><strong>67%</strong><small>Improving</small></article>
+</section>
+
+<section class="layout-two">
+  <form class="form-panel" [formGroup]="form" (ngSubmit)="saveScrap()">
+    <div class="section-title"><h3>Record Scrap</h3><button type="submit" class="secondary small">Save</button></div>
+    <div class="form-grid">
+      <label>Scrap Type<select formControlName="scrapType"><option>Damaged Pipes</option><option>Chips</option><option>Pulverizer Reprocessing</option></select></label>
+      <label>Stage<select formControlName="stage"><option [value]="1">Pipe Production</option><option [value]="2">Socketing</option><option [value]="3">Crushing</option><option [value]="4">Pulverizer Conversion</option></select></label>
+      <label>Generated Kg<input type="number" formControlName="generatedKg"></label>
+      <label>Reused Kg<input type="number" formControlName="reusedKg"></label>
+      <label class="full">Reference<input formControlName="sourceReference"></label>
+      <label>Date<input type="date" formControlName="recordDate"></label>
+    </div>
+    @if (message) { <p class="ok">{{ message }}</p> }
+  </form>
+
+  <section class="panel">
+    <div class="section-title"><h3>Scrap Log</h3><span class="badge pending">Processing</span></div>
+    <table>
+      <thead><tr><th>Stage</th><th>Type</th><th>Weight</th><th>Disposal</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>Pipe Production</td><td>Chips</td><td>48</td><td>Crushing</td><td><span class="badge pending">Processing</span></td></tr>
+        <tr><td>Socketing</td><td>Damaged Pipes</td><td>22</td><td>Sale</td><td><span class="badge pending">Pending</span></td></tr>
+        <tr><td>Pipe Production</td><td>Chips</td><td>14</td><td>Crushing</td><td><span class="badge">Done</span></td></tr>
+      </tbody>
+    </table>
+  </section>
+</section>

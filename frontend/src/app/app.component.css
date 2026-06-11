@@ -1,0 +1,73 @@
+:host {
+  display: grid;
+  grid-template-columns: 250px minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+aside {
+  background: #0b1324;
+  color: white;
+  padding: 24px 18px;
+}
+
+h1 {
+  font-size: 18px;
+  margin: 0 0 4px;
+  letter-spacing: 0;
+}
+
+h1::after {
+  content: "Manufacturing System";
+  color: #94a3b8;
+  display: block;
+  font-size: 11px;
+  font-weight: 400;
+  margin-top: 2px;
+}
+
+nav {
+  display: grid;
+  gap: 8px;
+}
+
+a {
+  color: #cbd5e1;
+  text-decoration: none;
+  padding: 9px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+a.active,
+a:hover {
+  background: #1e293b;
+  color: white;
+}
+
+main {
+  padding: 22px;
+  min-width: 0;
+}
+
+@media (max-width: 780px) {
+  :host {
+    grid-template-columns: 1fr;
+  }
+
+  aside {
+    padding: 16px;
+  }
+
+  nav {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  a {
+    text-align: center;
+    padding: 9px 6px;
+  }
+
+  main {
+    padding: 18px;
+  }
+}

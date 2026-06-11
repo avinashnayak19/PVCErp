@@ -1,0 +1,85 @@
+<section class="page-title">
+  <div>
+    <h2>Dashboard</h2>
+    <p>Live production, scrap, stock, dispatch, and machine activity.</p>
+  </div>
+  <div class="topbar">
+    <span>Shift: Morning</span>
+    <button class="secondary small" type="button">Admin</button>
+  </div>
+</section>
+
+@if (dashboard$ | async; as dashboard) {
+  <section class="card-grid">
+    <article class="metric-card">
+      <span>Raw Material Stock</span>
+      <strong>{{ dashboard.rawMaterialStockKg | number: '1.0-2' }} kg</strong>
+      <small>Materials available</small>
+    </article>
+    <article class="metric-card">
+      <span>Approved Production</span>
+      <strong>{{ dashboard.productionApprovedKg | number: '1.0-2' }} kg</strong>
+      <small>Finished goods</small>
+    </article>
+    <article class="metric-card">
+      <span>Rejected Production</span>
+      <strong>{{ dashboard.productionRejectedKg | number: '1.0-2' }} kg</strong>
+      <small class="warn">Review loss</small>
+    </article>
+    <article class="metric-card">
+      <span>Scrap Recovery</span>
+      <strong>{{ dashboard.scrapReusedKg | number: '1.0-2' }} / {{ dashboard.scrapGeneratedKg | number: '1.0-2' }} kg</strong>
+      <small>Reusable chips</small>
+    </article>
+    <article class="metric-card">
+      <span>Pending Dispatch</span>
+      <strong>{{ dashboard.pendingDispatchCount }}</strong>
+      <small class="warn">Issue slips pending</small>
+    </article>
+  </section>
+
+  <section class="dashboard-grid">
+    <article class="panel">
+      <div class="section-title">
+        <h3>Production - This Week</h3>
+        <span class="badge">Running</span>
+      </div>
+      <div class="bar-chart">
+        <span style="height: 62%"></span>
+        <span style="height: 48%"></span>
+        <span style="height: 76%"></span>
+        <span style="height: 58%"></span>
+        <span style="height: 84%"></span>
+        <span style="height: 66%"></span>
+      </div>
+    </article>
+
+    <article class="panel">
+      <div class="section-title">
+        <h3>Machine Efficiency</h3>
+        <span>Avg output today</span>
+      </div>
+      <div class="eff-row"><span>Screw Barrel SB-01</span><strong>88%</strong></div>
+      <div class="eff-row"><span>Screw Barrel SB-02</span><strong>73%</strong></div>
+      <div class="eff-row"><span>Screw Barrel SB-03</span><strong>61%</strong></div>
+    </article>
+  </section>
+
+  <section class="panel">
+    <div class="section-title">
+      <h3>Recent Activity</h3>
+      <button class="secondary small" type="button">Refresh</button>
+    </div>
+    <table>
+      <thead>
+        <tr><th>Time</th><th>Module</th><th>Description</th><th>User</th><th>Status</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>09:42</td><td>Production</td><td>Batch issued to floor</td><td>Supervisor</td><td><span class="badge">Approved</span></td></tr>
+        <tr><td>09:15</td><td>Inward</td><td>GRN received</td><td>Stores</td><td><span class="badge">Received</span></td></tr>
+        <tr><td>08:55</td><td>Dispatch</td><td>Issue slip dispatched</td><td>Dispatch</td><td><span class="badge">Done</span></td></tr>
+        <tr><td>08:30</td><td>Scrap</td><td>Chips sent for crushing</td><td>Floor</td><td><span class="badge pending">Processing</span></td></tr>
+      </tbody>
+    </table>
+  </section>
+}

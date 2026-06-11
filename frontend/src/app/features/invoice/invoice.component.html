@@ -1,0 +1,38 @@
+<section class="page-title">
+  <div>
+    <h2>Invoice & Accounts</h2>
+    <p>Generate GST invoices, link challans, maintain ledger, and track payments.</p>
+  </div>
+  <div class="topbar"><span>Shift: Morning</span><button class="secondary small">Admin</button></div>
+</section>
+
+<section class="card-grid">
+  <article class="metric-card"><span>Invoices This Month</span><strong>28</strong><small>Generated</small></article>
+  <article class="metric-card"><span>Total Billed</span><strong>18.4L</strong><small>This month</small></article>
+  <article class="metric-card"><span>Payment Received</span><strong>12.1L</strong><small>Settled</small></article>
+  <article class="metric-card"><span>Outstanding</span><strong>6.3L</strong><small class="bad">Pending</small></article>
+</section>
+
+<section class="layout-two">
+  <form class="form-panel">
+    <div class="section-title"><h3>Generate GST Invoice</h3><button type="button" class="secondary small">Create Invoice</button></div>
+    <div class="form-grid">
+      <label>Linked Challan No.<select><option>CH-0442</option><option>CH-0441</option></select></label>
+      <label>Customer GSTIN<input value="23AAAAA0000A1Z5"></label>
+      <label>Rate per pipe<input type="number" value="85"></label>
+      <label>GST %<select><option>18%</option><option>12%</option></select></label>
+    </div>
+  </form>
+
+  <section class="panel">
+    <div class="section-title"><h3>Invoice Ledger</h3><span class="badge">Paid</span></div>
+    <table>
+      <thead><tr><th>Invoice</th><th>Customer</th><th>Amount</th><th>GST</th><th>Total</th><th>Payment</th></tr></thead>
+      <tbody>
+        <tr><td>INV-2241</td><td>Sharma Infra</td><td>68,000</td><td>12,240</td><td>80,240</td><td><span class="badge">Paid</span></td></tr>
+        <tr><td>INV-2242</td><td>Rajput Builders</td><td>42,500</td><td>7,650</td><td>50,150</td><td><span class="badge pending">Partial</span></td></tr>
+        <tr><td>INV-2243</td><td>MP Jal Nigam</td><td>93,500</td><td>16,830</td><td>110,330</td><td><span class="badge bad">Unpaid</span></td></tr>
+      </tbody>
+    </table>
+  </section>
+</section>

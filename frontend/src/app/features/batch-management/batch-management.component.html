@@ -1,0 +1,92 @@
+<section class="page-title">
+  <div>
+    <h2>Batch Management</h2>
+    <p>Create batch request, standard formula, and compare material consumption.</p>
+  </div>
+  <div class="topbar"><span>Shift: Morning</span><button class="secondary small">Admin</button></div>
+</section>
+
+<section class="card-grid">
+  <article class="metric-card"><span>Calcium</span><strong>70 kg</strong><small>Standard</small></article>
+  <article class="metric-card"><span>Resin</span><strong>35 kg</strong><small>Standard</small></article>
+  <article class="metric-card"><span>Pulverizer</span><strong>20 kg</strong><small>Standard</small></article>
+  <article class="metric-card"><span>Status</span><strong>Approved</strong><small>Ready for production</small></article>
+</section>
+
+<section class="layout-two">
+  <form class="form-panel" [formGroup]="form" (ngSubmit)="saveFormula()">
+    <h3>Create Batch Request</h3>
+    <div class="form-grid">
+      <label>
+        Calcium Batch
+        <select formControlName="calciumId">
+          <option value="">Select</option>
+          @for (item of stock$ | async; track item.id) {
+            <option [value]="item.id">{{ item.name }} - {{ item.availableKg | number:'1.0-0' }} kg</option>
+          }
+        </select>
+      </label>
+      <label>
+        Calcium Kg
+        <input type="number" formControlName="calciumKg">
+      </label>
+      <label>
+        Resin Batch
+        <select formControlName="resinId">
+          <option value="">Select</option>
+          @for (item of stock$ | async; track item.id) {
+            <option [value]="item.id">{{ item.name }} - {{ item.availableKg | number:'1.0-0' }} kg</option>
+          }
+        </select>
+      </label>
+      <label>
+        Resin Kg
+        <input type="number" formControlName="resinKg">
+      </label>
+      <label>
+        Pulverizer Batch
+        <select formControlName="pulverizerId">
+          <option value="">Select</option>
+          @for (item of stock$ | async; track item.id) {
+            <option [value]="item.id">{{ item.name }} - {{ item.availableKg | number:'1.0-0' }} kg</option>
+          }
+        </select>
+      </label>
+      <label>
+        Pulverizer Kg
+        <input type="number" formControlName="pulverizerKg">
+      </label>
+      <label class="full">
+        Approved By
+        <input formControlName="approvedBy">
+      </label>
+    </div>
+    <button type="submit">Submit</button>
+    @if (message) { <p class="ok">{{ message }}</p> }
+  </form>
+
+  <section class="panel">
+    <div class="section-title">
+      <h3>Batch History</h3>
+      <span class="badge">Consumed</span>
+    </div>
+    <table>
+      <thead><tr><th>Batch</th><th>Calcium</th><th>Resin</th><th>Pulverizer</th><th>Status</th></tr></thead>
+      <tbody>
+        @for (batch of batchHistory$ | async; track batch.id) {
+          <tr>
+            <td>{{ batch.batchNumber }}</td>
+            <td>{{ batch.calciumKg || '-' }}</td>
+            <td>{{ batch.resinKg || '-' }}</td>
+            <td>{{ batch.pulverizerKg || '-' }}</td>
+            <td>
+              <span class="badge" [class.pending]="batch.status === 'Variance'">
+                {{ batch.status || 'Processing' }}
+              </span>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </section>
+</section>

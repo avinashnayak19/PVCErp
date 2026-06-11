@@ -1,0 +1,20 @@
+<aside>
+  <h1>PVC ERP</h1>
+  <nav>
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Dashboard</a>
+    <a routerLink="/workflow" routerLinkActive="active">E2E Flow</a>
+    <a routerLink="/inventory" routerLinkActive="active">Raw Material Inward</a>
+    <a routerLink="/batch-management" routerLinkActive="active">Batch Management</a>
+    <a routerLink="/production" routerLinkActive="active">Production</a>
+    <a routerLink="/socketing" routerLinkActive="active">Socketing</a>
+    <a routerLink="/scrap-management" routerLinkActive="active">Scrap Management</a>
+    <a routerLink="/dispatch" routerLinkActive="active">Dispatch</a>
+    <a routerLink="/invoice" routerLinkActive="active">Invoice</a>
+    <a routerLink="/machine-efficiency" routerLinkActive="active">Machine Efficiency</a>
+    <a routerLink="/reports" routerLinkActive="active">Reports</a>
+  </nav>
+</aside>
+
+<main>
+  <router-outlet></router-outlet>
+</main>

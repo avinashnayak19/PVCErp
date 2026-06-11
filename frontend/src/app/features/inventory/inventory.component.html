@@ -1,0 +1,155 @@
+<section class="page-title">
+  <div>
+    <h2>Raw Material Inward</h2>
+    <p>Supplier-wise inward, QC, GRN, and batch-wise stock.</p>
+  </div>
+  <div class="topbar"><span>Shift: Morning</span><button class="secondary small">Admin</button></div>
+</section>
+
+<section class="card-grid">
+  @if (metrics$ | async; as metrics) {
+    @for (material of metrics.materials; track material.name) {
+      <article class="metric-card">
+        <span>{{ material.name }} Stock</span>
+        <strong>{{ material.available | number: '1.0-0' }} {{ material.unit }}</strong>
+        <small [class.warn]="material.status === 'Low'" [class.ok]="material.status === 'Sufficient'">{{ material.status }}</small>
+      </article>
+    }
+    <article class="metric-card">
+      <span>GRNs Today</span>
+      <strong>{{ metrics.grnCount }}</strong>
+      <small class="ok">{{ metrics.grnCount > 0 ? 'Pending QC' : 'None' }}</small>
+    </article>
+  }
+</section>
+
+<section class="layout">
+  <form [formGroup]="grnForm" (ngSubmit)="saveGrn()">
+    <div class="section-title">
+      <h3>New GRN Entry</h3>
+      <button class="secondary small" type="button">Save Draft</button>
+    </div>
+    <div class="form-grid">
+      <label>
+        Material Type
+         <select formControlName="materialName">
+          <option *ngFor="let m of (getRawmaterials$ | async)" [value]="m.name">{{ m.name }}</option>
+        </select>
+      </label>
+      <label>
+        Supplier Name
+        <input formControlName="supplierName">
+      </label>
+      <label>
+        Invoice Weight (kg)
+        <input type="number" formControlName="invoiceWeightKg">
+      </label>
+      <label>
+        Actual Weight (kg)
+        <input type="number" formControlName="actualWeightKg">
+      </label>
+      <label>
+        Quality Status
+        <select formControlName="qualityStatus">
+          <option [value]="2">Approved</option>
+          <option [value]="1">Pending</option>
+          <option [value]="3">Rejected</option>
+        </select>
+      </label>
+      <label>
+        Date Received
+        <input type="date" formControlName="dateReceived">
+      </label>
+    </div>
+    <button type="submit">Save GRN</button>
+    @if (grnMessage) { <p class="ok">{{ grnMessage }}</p> }
+  </form>
+
+  <section class="panel">
+    <div class="section-title">
+      <h3>Current Stock</h3>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Material</th>
+          <th>Available</th>
+          <th>Reorder Level</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of (paginatedStock$ | async)?.items; track item.id) {
+          <tr>
+            <td>{{ item.name }}</td>
+            <td>{{ item.availableKg | number: '1.0-2' }} {{ item.unit }}</td>
+            <td>{{ item.reorderLevel | number: '1.0-2' }} {{ item.unit }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+    @if (paginatedStock$ | async; as pagination) {
+      @if (pagination.totalPages > 1) {
+        <div class="pagination">
+          @for (idx of [].constructor(pagination.totalPages); track $index) {
+            <button 
+              class="pager" 
+              [class.active]="($index + 1) === pagination.currentPage" 
+              (click)="goToPage($index + 1)"
+              type="button">
+              {{ $index + 1 }}
+            </button>
+          }
+        </div>
+      }
+    }
+  </section>
+</section>
+
+<section class="layout-two lower">
+  <form class="form-panel" [formGroup]="form" (ngSubmit)="save()">
+    <h3>Add Raw Material Master</h3>
+    <label>Name<input formControlName="name" placeholder="Calcium"></label>
+    <label>Unit<input formControlName="unit"></label>
+    <label>Reorder Level<input type="number" formControlName="reorderLevel"></label>
+    <button type="submit">Save Material</button>
+  </form>
+
+  <section class="panel">
+    <div class="section-title">
+      <h3>GRN History</h3>
+      <span class="badge">Approved</span>
+    </div>
+    <table>
+      <thead><tr><th>GRN</th><th>Material</th><th>Supplier</th><th>Weight</th><th>QC</th><th>Date</th></tr></thead>
+      <tbody>
+        @for (grn of (paginatedGrn$ | async)?.items; track grn.id) {
+          <tr>
+            <td>{{ grn.grnNumber }}</td>
+            <td>{{ grn.material || '-' }}</td>
+            <td>{{ grn.supplierName || grn.supplierId }}</td>
+            <td>{{ grn.weight || '-' }}</td>
+            <td><span class="badge" [class.pending]="grn.qc === 'Pending'">
+                {{ grn.qc || 'Unknown' }}
+              </span></td>
+            <td>{{ grn.date | date:'shortDate' }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+    @if (paginatedGrn$ | async; as grnPagination) {
+      @if (grnPagination.totalPages > 1) {
+        <div class="pagination">
+          @for (idx of [].constructor(grnPagination.totalPages); track $index) {
+            <button
+              class="pager"
+              [class.active]="($index + 1) === grnPagination.currentPage"
+              (click)="goToGrnPage($index + 1)"
+              type="button">
+              {{ $index + 1 }}
+            </button>
+          }
+        </div>
+      }
+    }
+  </section>
+</section>

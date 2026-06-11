@@ -1,0 +1,39 @@
+<section class="page-title">
+  <div>
+    <h2>Dispatch Management</h2>
+    <p>Issue slips, vehicle allocation, challan generation, and customer dispatch history.</p>
+  </div>
+  <div class="topbar"><span>Shift: Morning</span><button class="secondary small">Admin</button></div>
+</section>
+
+<section class="card-grid">
+  <article class="metric-card"><span>Pending Dispatches</span><strong>5</strong><small>Issue slips</small></article>
+  <article class="metric-card"><span>Dispatched Today</span><strong>3</strong><small>Complete</small></article>
+  <article class="metric-card"><span>Pipes Dispatched</span><strong>2,400</strong><small>Today</small></article>
+  <article class="metric-card"><span>Challans Generated</span><strong>3</strong><small>Today</small></article>
+</section>
+
+<section class="layout-two">
+  <form class="form-panel">
+    <div class="section-title"><h3>New Dispatch / Issue Slip</h3><button type="button" class="secondary small">Generate Challan</button></div>
+    <div class="form-grid">
+      <label>Customer Name<input value="Sharma Infra Pvt Ltd"></label>
+      <label>Pipe Diameter (mm)<input value="90"></label>
+      <label>Quantity (pipes)<input type="number" value="500"></label>
+      <label>Total Weight (kg)<input type="number" value="1200"></label>
+      <label>Vehicle No.<input placeholder="MP09 XX 0000 (optional)"></label>
+      <label>Dispatch Date<input type="date"></label>
+    </div>
+  </form>
+
+  <section class="panel">
+    <div class="section-title"><h3>Dispatch History</h3><span class="badge">Done</span></div>
+    <table>
+      <thead><tr><th>Challan</th><th>Customer</th><th>Qty</th><th>Diameter</th><th>Weight</th><th>Vehicle</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>CH-0441</td><td>Sharma Infra</td><td>800</td><td>90mm</td><td>1,920</td><td>MP09AB1234</td><td><span class="badge">Done</span></td></tr>
+        <tr><td>CH-0442</td><td>Patel Build</td><td>500</td><td>63mm</td><td>900</td><td>Pending</td><td><span class="badge pending">Pending</span></td></tr>
+      </tbody>
+    </table>
+  </section>
+</section>

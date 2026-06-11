@@ -1,0 +1,33 @@
+<section class="page-title">
+  <div>
+    <h2>Machine Efficiency</h2>
+    <p>Screw barrel output, rejection rate, active barrel status, and operator performance.</p>
+  </div>
+  <div class="topbar"><span>Shift: Morning</span><button class="secondary small">Admin</button></div>
+</section>
+
+<section class="card-grid">
+  <article class="metric-card"><span>Best Barrel Today</span><strong>SB-01</strong><small>88% efficient</small></article>
+  <article class="metric-card"><span>Avg Efficiency</span><strong>74%</strong><small>All barrels</small></article>
+  <article class="metric-card"><span>Rejection Rate</span><strong>4.7%</strong><small class="warn">Avg</small></article>
+  <article class="metric-card"><span>Active Barrels</span><strong>3</strong><small>Running</small></article>
+</section>
+
+<section class="panel">
+  <div class="section-title"><h3>Screw Barrel Efficiency Report</h3><span class="badge">Active</span></div>
+  <table>
+    <thead><tr><th>Barrel</th><th>Produced</th><th>Hours</th><th>Kg/Hour</th><th>Target</th><th>Status</th></tr></thead>
+    <tbody>
+      @for (item of efficiency$ | async; track item.barrelNumber) {
+        <tr>
+          <td>{{ item.barrelNumber }}</td>
+          <td>{{ item.producedKg | number:'1.0-2' }}</td>
+          <td>{{ item.hoursRun | number:'1.0-2' }}</td>
+          <td>{{ item.kgPerHour | number:'1.0-2' }}</td>
+          <td>{{ item.targetKgPerHour | number:'1.0-2' }}</td>
+          <td><span class="badge">Active</span></td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</section>

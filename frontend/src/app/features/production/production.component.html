@@ -1,0 +1,66 @@
+<section class="page-title">
+  <div>
+    <h2>Production</h2>
+    <p>Record pipe production, rejected quantity, scrap weight, shift, operator, and machine.</p>
+  </div>
+  <div class="topbar"><span>Shift: Morning</span><button class="secondary small">Admin</button></div>
+</section>
+
+<section class="card-grid">
+  <article class="metric-card"><span>Pipes Produced</span><strong>1,240</strong><small>Approved</small></article>
+  <article class="metric-card"><span>Pipes Rejected</span><strong>62</strong><small class="bad">4.7% rate</small></article>
+  <article class="metric-card"><span>Scrap Chips</span><strong>48 kg</strong><small>For crushing</small></article>
+  <article class="metric-card"><span>Active Machine</span><strong>SB-01</strong><small>Running</small></article>
+</section>
+
+<section class="layout-two">
+  <form class="form-panel">
+    <div class="section-title"><h3>Record Production Entry</h3><button type="button" class="secondary small">Save</button></div>
+    <div class="form-grid">
+      <label>Machine / Barrel No.<select><option>SB-01</option><option>SB-02</option></select></label>
+      <label>Operator Name<input value="Ramesh Singh"></label>
+      <label>Pipes Produced<input type="number" value="200"></label>
+      <label>Pipes Rejected<input type="number" value="8"></label>
+      <label>Scrap Weight (kg)<input type="number" value="12"></label>
+      <label>Shift<select><option>Morning</option><option>Afternoon</option><option>Night</option></select></label>
+    </div>
+  </form>
+
+  <section class="panel">
+    <div class="section-title"><h3>Today's Production Log</h3><span class="badge">95.7% efficient</span></div>
+    <table>
+      <thead><tr><th>Shift</th><th>Machine</th><th>Operator</th><th>Produced</th><th>Rejected</th><th>Scrap</th><th>Efficiency</th></tr></thead>
+      <tbody>
+        <tr><td>Morning</td><td>SB-01</td><td>Ramesh</td><td>420</td><td>18</td><td>14</td><td><span class="badge">95.7%</span></td></tr>
+        <tr><td>Morning</td><td>SB-02</td><td>Sunil</td><td>380</td><td>24</td><td>19</td><td><span class="badge pending">93.7%</span></td></tr>
+        <tr><td>Afternoon</td><td>SB-01</td><td>Deepak</td><td>440</td><td>20</td><td>15</td><td><span class="badge">95.4%</span></td></tr>
+      </tbody>
+    </table>
+  </section>
+</section>
+
+<section class="panel lower">
+  <div class="section-title"><h3>Screw Barrel Efficiency</h3><span class="badge">Live</span></div>
+  <table>
+    <thead>
+      <tr>
+        <th>Barrel</th>
+        <th>Produced</th>
+        <th>Hours</th>
+        <th>Kg/Hour</th>
+        <th>Target</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (item of efficiency$ | async; track item.barrelNumber) {
+        <tr>
+          <td>{{ item.barrelNumber }}</td>
+          <td>{{ item.producedKg | number: '1.0-2' }}</td>
+          <td>{{ item.hoursRun | number: '1.0-2' }}</td>
+          <td>{{ item.kgPerHour | number: '1.0-2' }}</td>
+          <td>{{ item.targetKgPerHour | number: '1.0-2' }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</section>

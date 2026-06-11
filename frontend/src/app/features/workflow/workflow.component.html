@@ -1,0 +1,124 @@
+<section class="page-title">
+  <h2>End To End Flow</h2>
+  <p>Run stock entry, GRN, production, scrap, dispatch, invoice, and reports in one controlled flow.</p>
+</section>
+
+<section class="toolbar">
+  <button type="button" (click)="runFullFlow()" [disabled]="running">
+    {{ running ? 'Running Flow...' : 'Run Complete Flow' }}
+  </button>
+  <button class="secondary" type="button" (click)="refreshReports()" [disabled]="running">Refresh Reports</button>
+</section>
+
+@if (error) {
+  <section class="alert">{{ error }}</section>
+}
+
+<section class="steps">
+  @for (step of steps; track step.key) {
+    <article [class]="step.status">
+      <span>{{ step.status }}</span>
+      <strong>{{ step.title }}</strong>
+      @if (step.result) {
+        <p>{{ step.result }}</p>
+      }
+    </article>
+  }
+</section>
+
+@if (dashboard) {
+  <section class="metrics">
+    <article>
+      <span>Raw Material Stock</span>
+      <strong>{{ dashboard.rawMaterialStockKg | number: '1.0-2' }} kg</strong>
+    </article>
+    <article>
+      <span>Approved Production</span>
+      <strong>{{ dashboard.productionApprovedKg | number: '1.0-2' }} kg</strong>
+    </article>
+    <article>
+      <span>Rejected Production</span>
+      <strong>{{ dashboard.productionRejectedKg | number: '1.0-2' }} kg</strong>
+    </article>
+    <article>
+      <span>Scrap Reused</span>
+      <strong>{{ dashboard.scrapReusedKg | number: '1.0-2' }} kg</strong>
+    </article>
+    <article>
+      <span>Pending Dispatch</span>
+      <strong>{{ dashboard.pendingDispatchCount }}</strong>
+    </article>
+  </section>
+}
+
+<section class="results">
+  <article>
+    <h3>Stock Report</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Material</th>
+          <th>Available</th>
+          <th>Reorder</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of stock; track item.id) {
+          <tr>
+            <td>{{ item.name }}</td>
+            <td>{{ item.availableKg | number: '1.0-2' }} {{ item.unit }}</td>
+            <td>{{ item.reorderLevel | number: '1.0-2' }} {{ item.unit }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </article>
+
+  <article>
+    <h3>Screw Barrel Efficiency</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Barrel</th>
+          <th>Produced</th>
+          <th>Hours</th>
+          <th>Kg/Hour</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of efficiency; track item.barrelNumber) {
+          <tr>
+            <td>{{ item.barrelNumber }}</td>
+            <td>{{ item.producedKg | number: '1.0-2' }}</td>
+            <td>{{ item.hoursRun | number: '1.0-2' }}</td>
+            <td>{{ item.kgPerHour | number: '1.0-2' }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </article>
+</section>
+
+@if (invoice || batch || grn) {
+  <section class="summary">
+    <h3>Created Documents</h3>
+    <dl>
+      <div>
+        <dt>GRN</dt>
+        <dd>{{ grn?.grnNumber || '-' }}</dd>
+      </div>
+      <div>
+        <dt>Batch</dt>
+        <dd>{{ batch?.batchNumber || '-' }}</dd>
+      </div>
+      <div>
+        <dt>Dispatch</dt>
+        <dd>{{ dispatch?.challanNumber || '-' }}</dd>
+      </div>
+      <div>
+        <dt>Invoice</dt>
+        <dd>{{ invoice?.invoiceNumber || '-' }}</dd>
+      </div>
+    </dl>
+  </section>
+}
