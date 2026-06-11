@@ -52,7 +52,8 @@ public sealed class InventoryService : IInventoryService
                 material.Name,
                 material.Unit,
                 material.ReorderLevel,
-                batches.Where(batch => batch.RawMaterialId == material.Id).Sum(batch => batch.AvailableQuantityKg)))
+                batches.Where(batch => batch.RawMaterialId == material.Id).Sum(batch => batch.AvailableQuantityKg),
+                material.Location))
             .OrderBy(item => item.Name)
             .ToList();
     }
@@ -68,7 +69,8 @@ public sealed class InventoryService : IInventoryService
                 material.Name,
                 material.Unit,
                 material.ReorderLevel,
-                batches.Where(batch => batch.RawMaterialId == material.Id).Sum(batch => batch.AvailableQuantityKg)))
+                batches.Where(batch => batch.RawMaterialId == material.Id).Sum(batch => batch.AvailableQuantityKg),
+                material.Location))
             .OrderBy(item => item.Name)
             .ToList();
     }
@@ -125,13 +127,14 @@ public sealed class InventoryService : IInventoryService
         {
             Name = request.Name,
             Unit = request.Unit,
-            ReorderLevel = request.ReorderLevel
+            ReorderLevel = request.ReorderLevel,
+            Location = request.Location
         };
 
         await _rawMaterials.AddAsync(rawMaterial, cancellationToken);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return new RawMaterialDto(rawMaterial.Id, rawMaterial.Name, rawMaterial.Unit, rawMaterial.ReorderLevel, 0);
+        return new RawMaterialDto(rawMaterial.Id, rawMaterial.Name, rawMaterial.Unit, rawMaterial.ReorderLevel, 0, rawMaterial.Location);
     }
 
     public async Task<GrnDto> CreateGrnAsync(CreateGrnRequest request, CancellationToken cancellationToken = default)
